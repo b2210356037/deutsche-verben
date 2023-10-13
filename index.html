@@ -71,48 +71,49 @@
         <button type="submit">Get Conjugation</button>
     </form>
     <div id="result">
-    <h2>Conjugation of {{ word }}</h2>
-    <table>
-        <caption>Source: [bab.la]</caption>
-        <tr>
-            <th>Category</th>
-            <th>Person</th>
-            <th>Conjugation</th>
-        </tr>
-        {% set current_category = '' %}
-{% for result in results %}
-    {% set category = 'Präsens' if loop.index <= 6
-                  else 'Präteritum' if loop.index <= 12
-                  else 'Perfekt' if loop.index <= 18
-                  else 'Plusquamperfekt' if loop.index <= 24
-                  else 'Futur I' if loop.index <= 30
-                  else 'Futur II' if loop.index <= 36
-                  else 'Konjunktiv I Präsens' if loop.index <= 42
-                  else 'Konjunktiv I Perfekt' if loop.index <= 48
-                  else 'Konjunktiv I Futur I' if loop.index <= 54
-                  else 'Konjunktiv I Futur II' if loop.index <= 60
-                  else 'Konjunktiv II Präteritum' if loop.index <= 66
-                  else 'Konjunktiv II Plusquamperfekt' if loop.index <= 72
-                  else 'Konjunktiv II Futur I' if loop.index <= 78
-                  else 'Konjunktiv II Futur II' if loop.index <= 84
-                  else 'Imperativ' if loop.index <= 90
-                  else 'Partizip II' if loop.index <= 96
-                  else 'Infinitiv' if loop.index <= 102
-                  else 'Hilfsverb' %}
-    {% if current_category != category %}
-        <tr>
-            <th colspan="3">{{ category }}</th>
-        </tr>
-        {% set current_category = category %}
-    {% endif %}
-    <tr>
-        <td></td>
-        <td>{{ result[0] }}</td>
-        <td>{{ result[1:]|join(' ') }}</td>
-    </tr>
-{% endfor %}
-
-    </table>
-</div>
+        <h2>Conjugation of {{ word }}</h2>
+        <table>
+            <caption>Source: [bab.la]</caption>
+            <tr>
+                <th>Category</th>
+                <th>Person</th>
+                <th>Conjugation</th>
+            </tr>
+            {% set current_category = '' %}
+            {% for result in results %}
+                {% set category = {
+                    1: 'Präsens',
+                    7: 'Präteritum',
+                    13: 'Perfekt',
+                    19: 'Plusquamperfekt',
+                    25: 'Futur I',
+                    31: 'Futur II',
+                    37: 'Konjunktiv I Präsens',
+                    43: 'Konjunktiv I Perfekt',
+                    49: 'Konjunktiv I Futur I',
+                    55: 'Konjunktiv I Futur II',
+                    61: 'Konjunktiv II Präteritum',
+                    67: 'Konjunktiv II Plusquamperfekt',
+                    73: 'Konjunktiv II Futur I',
+                    79: 'Konjunktiv II Futur II',
+                    85: 'Imperativ',
+                    91: 'Partizip II',
+                    97: 'Infinitiv',
+                    103: 'Hilfsverb',
+                }[loop.index] %}
+                {% if current_category != category %}
+                    <tr>
+                        <th colspan="3">{{ category }}</th>
+                    </tr>
+                    {% set current_category = category %}
+                {% endif %}
+                <tr>
+                    <td></td>
+                    <td>{{ result[0] }}</td>
+                    <td>{{ result[1:]|join(' ') }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>
