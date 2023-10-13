@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>German Conjugation</title>
+    <style>
+        body {
+    font-family: "Open Sans", sans-serif;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+form {
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+#result {
+    margin: 20px auto;
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+    border: 1px solid #dddddd;
+}
+
+    </style>
+</head>
+<body>
+    <h1>German Conjugation</h1>
+    <form method="POST">
+        <input type="text" name="word" placeholder="Enter a word">
+        <button type="submit">Get Conjugation</button>
+    </form>
+    <div id="result">
+        <h2>Conjugation of {{ word }}</h2>
+        <table>
+            <caption>Source: [bab.la]</caption>
+            {% set current_category = '' %}
+            {% for result in results %}
+                {% set category = 'Präsens' if loop.index <= 6
+                    else 'Präteritum' if loop.index <= 12
+                    else 'Perfekt' if loop.index <= 18
+                    else 'Plusquamperfekt' if loop.index <= 24
+                    else 'Futur I' if loop.index <= 30
+                    else 'Futur II' if loop.index <= 36
+                    else 'Konjunktiv I Präsens' if loop.index <= 42
+                    else 'Konjunktiv I Perfekt' if loop.index <= 48
+                    else 'Konjunktiv I Futur I' if loop.index <= 54
+                    else 'Konjunktiv I Futur II' if loop.index <= 60
+                    else 'Konjunktiv II Präteritum' if loop.index <= 66
+                    else 'Konjunktiv II Plusquamperfekt' if loop.index <= 72
+                    else 'Konjunktiv II Futur I' if loop.index <= 78
+                    else 'Konjunktiv II Futur II' if loop.index <= 84
+                    else 'Imperativ' if loop.index <= 90
+                    else 'Partizip II' if loop.index <= 96
+                    else 'Infinitiv' if loop.index <= 102
+                    else 'Hilfsverb' %}
+                {% if current_category != category %}
+                    {% if current_category != '' %}</td></tr>{% endif %}
+                    <tr><th colspan="2">{{ category }}</th></tr>
+                    <tr><td>{{ result[0] }}</td><td>{{ result[1] }}</td></tr>
+                    {% set current_category = category %}
+                {% else %}
+                    <tr><td>{{ result[0] }}</td><td>{{ result[1] }}</td></tr>
+                {% endif %}
+            {% endfor %}
+            {% if current_category != '' %}</td></tr>{% endif %}
+        </table>
+    </div>
+</body>
+</html>
