@@ -19,7 +19,7 @@ for table in tables:
         data.append(columns)
 
 #txt
-f = open("dieFolgen.txt", "w+")
+f = open("dieFolgen.txt", "w+", encoding = "utf-8")
 
 datas = []
 def Maker(istek):
@@ -58,7 +58,9 @@ def Maker(istek):
             elif(a == 5):
                 for i in karts:
                     datas.append([i[0], i[1] + " " + i[2] + " " + i[3] + " " + i[4]])
-            
+            f.write(tabulate(datas, headers=col_names, tablefmt="fancy_grid"))
+            f.write("\n")
+            print(tabulate(datas, headers=col_names, tablefmt="fancy_grid"))
             
     except:
         print(f"{istek} could not be found")
